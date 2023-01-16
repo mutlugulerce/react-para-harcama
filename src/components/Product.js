@@ -1,6 +1,8 @@
 import React from 'react'
 
-function Product({product,basket,setBasket}) {
+function Product({product,basket,setBasket,money,total}) {
+
+const basketItem = basket.find(item => item.id === product.id)
 
 const addBasket = () => {
 
@@ -37,9 +39,9 @@ const removeBasket = () => {
     <h4>{product.title}</h4>
     <div className='price'>{product.price}TL</div>
     <div className='actions'>
-        <button className='sell-btn' onClick={removeBasket}>Sat</button>
-        <span className='amount'>0</span>
-        <button className='buy-btn' onClick={addBasket}>Satın Al</button>
+        <button className='sell-btn' disabled={!basketItem} onClick={removeBasket}>Sat</button>
+        <span className='amount'>{basketItem && basketItem.amount || 0}</span>
+        <button className='buy-btn' disabled={total+ product.price > money } onClick={addBasket}>Satın Al</button>
     </div>
     </div>
   )
